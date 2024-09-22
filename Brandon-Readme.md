@@ -1,1 +1,2 @@
-Hello, I'm Brandon
+Hello, I'm Brandon.
+This is my file
