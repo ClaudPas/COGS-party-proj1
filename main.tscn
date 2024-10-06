@@ -18,7 +18,7 @@ size = Vector2(1152, 18)
 position = Vector2(165, 109)
 
 [node name="Bullet" parent="." instance=ExtResource("2_v8r2r")]
-position = Vector2(560, 72)
+position = Vector2(712, 112)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-8, 320)
