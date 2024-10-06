@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdjk501k14xgi"]
+
+[ext_resource type="PackedScene" uid="uid://dg81wrtj60tu" path="res://player.tscn" id="1_rvdd3"]
+[ext_resource type="PackedScene" uid="uid://bsfpvvq2g2j8q" path="res://bullet.tscn" id="2_v8r2r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0vaf"]
+size = Vector2(18, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b0n58"]
+size = Vector2(20, 25.8373)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cyga"]
+size = Vector2(1152, 18)
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_rvdd3")]
+position = Vector2(165, 109)
+
+[node name="Bullet" parent="." instance=ExtResource("2_v8r2r")]
+position = Vector2(560, 72)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-8, 320)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_x0vaf")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(1160, 272)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(0, 52)
+scale = Vector2(1, 25.08)
+shape = SubResource("RectangleShape2D_b0n58")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(576, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_3cyga")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(576, 656)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("RectangleShape2D_3cyga")
