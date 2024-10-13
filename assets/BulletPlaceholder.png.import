@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co6vqiqylayot"
-path="res://.godot/imported/CharacterPlaceholder.png-3c0e3532c7b3c3f49381c269e544a8f6.ctex"
+uid="uid://bvwjkbpianl4p"
+path="res://.godot/imported/BulletPlaceholder.png-532b114e71190112b33d7b165affbea5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://CharacterPlaceholder.png"
-dest_files=["res://.godot/imported/CharacterPlaceholder.png-3c0e3532c7b3c3f49381c269e544a8f6.ctex"]
+source_file="res://assets/BulletPlaceholder.png"
+dest_files=["res://.godot/imported/BulletPlaceholder.png-532b114e71190112b33d7b165affbea5.ctex"]
 
 [params]
 

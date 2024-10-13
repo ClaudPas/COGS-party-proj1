@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdjk501k14xgi"]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_fns5n"]
+[ext_resource type="PackedScene" uid="uid://dg81wrtj60tu" path="res://scenes/player.tscn" id="1_rvdd3"]
+[ext_resource type="PackedScene" uid="uid://lk1moa4ovcmv" path="res://scenes/block.tscn" id="4_kk04f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0vaf"]
+size = Vector2(18, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b0n58"]
+size = Vector2(20, 25.8373)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cyga"]
+size = Vector2(1152, 18)
+
+[node name="Main" type="Node"]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="World"]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="World/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.838009, 0.846589, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World"]
+position = Vector2(-8, 320)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D"]
+shape = SubResource("RectangleShape2D_x0vaf")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="World"]
+position = Vector2(1160, 272)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D2"]
+position = Vector2(0, 52)
+scale = Vector2(1, 25.08)
+shape = SubResource("RectangleShape2D_b0n58")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="World"]
+position = Vector2(576, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D3"]
+shape = SubResource("RectangleShape2D_3cyga")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="World"]
+position = Vector2(576, 656)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D4"]
+shape = SubResource("RectangleShape2D_3cyga")
+
+[node name="Timer" type="Timer" parent="World"]
+wait_time = 0.5
+
+[node name="block" parent="World" instance=ExtResource("4_kk04f")]
+position = Vector2(200, 194)
+
+[node name="block2" parent="World" instance=ExtResource("4_kk04f")]
+position = Vector2(912, 324)
+
+[node name="block3" parent="World" instance=ExtResource("4_kk04f")]
+position = Vector2(205, 497)
+
+[node name="SpawnPositions" type="Node2D" parent="World"]
+
+[node name="Spawn1" type="Marker2D" parent="World/SpawnPositions"]
+position = Vector2(72, 72)
+
+[node name="Spawn2" type="Marker2D" parent="World/SpawnPositions"]
+position = Vector2(1082, 584)
+
+[node name="Spawn3" type="Marker2D" parent="World/SpawnPositions"]
+position = Vector2(1100, 65)
+
+[node name="Spawn4" type="Marker2D" parent="World/SpawnPositions"]
+position = Vector2(80, 588)
+
+[node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("world", "spawn_positions")]
+script = ExtResource("1_fns5n")
+world = NodePath("../World")
+player_prefab = ExtResource("1_rvdd3")
+spawn_positions = NodePath("../World/SpawnPositions")
