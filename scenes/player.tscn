@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dg81wrtj60tu"]
+[gd_scene load_steps=6 format=3 uid="uid://dg81wrtj60tu"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1bsit"]
 [ext_resource type="Texture2D" uid="uid://co6vqiqylayot" path="res://assets/CharacterPlaceholder.png" id="2_qals0"]
@@ -6,9 +6,13 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3agqq"]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hat_sprite")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_b1ss6"]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hat_sprite", "attack_pivot", "enable_attack_hitbox")]
 script = ExtResource("1_1bsit")
 hat_sprite = NodePath("HatSprite")
+attack_pivot = NodePath("AttackPivot")
+enable_attack_hitbox = NodePath("AttackPivot/Area2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)
@@ -23,3 +27,19 @@ texture = ExtResource("2_qals0")
 position = Vector2(0, -12)
 scale = Vector2(0.71875, 0.8125)
 texture = ExtResource("3_lwf3q")
+
+[node name="AttackPivot" type="Node2D" parent="."]
+position = Vector2(0, 12)
+
+[node name="Area2D" type="Area2D" parent="AttackPivot"]
+position = Vector2(0, -12)
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/Area2D"]
+position = Vector2(-20, 12)
+rotation = 3.14159
+scale = Vector2(0.882, 0.882)
+shape = SubResource("CircleShape2D_b1ss6")
+
+[connection signal="body_entered" from="AttackPivot/Area2D" to="." method="_on_area_2d_body_entered"]
