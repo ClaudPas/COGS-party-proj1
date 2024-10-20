@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdjk501k14xgi"]
+[gd_scene load_steps=10 format=3 uid="uid://j3ynuk0iohdg"]
 
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_fns5n"]
-[ext_resource type="PackedScene" uid="uid://dg81wrtj60tu" path="res://scenes/player.tscn" id="1_rvdd3"]
-[ext_resource type="PackedScene" uid="uid://lk1moa4ovcmv" path="res://scenes/block.tscn" id="4_kk04f"]
+[ext_resource type="Script" path="res://scripts/mini_game_manager_claud.gd" id="1_bsyiu"]
+[ext_resource type="PackedScene" uid="uid://lk1moa4ovcmv" path="res://scenes/block.tscn" id="1_rlxds"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_k04k1"]
+[ext_resource type="PackedScene" uid="uid://cjxwr1g6m4k20" path="res://scenes/mob_bullet.tscn" id="2_mvus3"]
+[ext_resource type="PackedScene" uid="uid://dg81wrtj60tu" path="res://scenes/player.tscn" id="3_8tsh2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x0vaf"]
 size = Vector2(18, 648)
@@ -13,7 +15,15 @@ size = Vector2(20, 25.8373)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cyga"]
 size = Vector2(1152, 18)
 
+[sub_resource type="Curve2D" id="Curve2D_ir7dp"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -25, -27, 0, 0, 0, 0, 1186, -49, 0, 0, 0, 0, 1214, 686, 0, 0, 0, 0, -19, 695, 0, 0, 0, 0, -25, -27)
+}
+point_count = 5
+
 [node name="Main" type="Node"]
+script = ExtResource("1_bsyiu")
+mob_scene = ExtResource("2_mvus3")
 
 [node name="World" type="Node2D" parent="."]
 
@@ -55,17 +65,16 @@ position = Vector2(576, 656)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D4"]
 shape = SubResource("RectangleShape2D_3cyga")
 
-[node name="Timer" type="Timer" parent="World"]
+[node name="MobTimer" type="Timer" parent="World"]
 wait_time = 0.5
 
-[node name="block" parent="World" instance=ExtResource("4_kk04f")]
-visible = false
+[node name="block" parent="World" instance=ExtResource("1_rlxds")]
 position = Vector2(200, 194)
 
-[node name="block2" parent="World" instance=ExtResource("4_kk04f")]
+[node name="block2" parent="World" instance=ExtResource("1_rlxds")]
 position = Vector2(912, 324)
 
-[node name="block3" parent="World" instance=ExtResource("4_kk04f")]
+[node name="block3" parent="World" instance=ExtResource("1_rlxds")]
 position = Vector2(205, 497)
 
 [node name="SpawnPositions" type="Node2D" parent="World"]
@@ -83,7 +92,16 @@ position = Vector2(1100, 65)
 position = Vector2(80, 588)
 
 [node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("world", "spawn_positions")]
-script = ExtResource("1_fns5n")
+script = ExtResource("2_k04k1")
 world = NodePath("../World")
-player_prefab = ExtResource("1_rvdd3")
+player_prefab = ExtResource("3_8tsh2")
 spawn_positions = NodePath("../World/SpawnPositions")
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ir7dp")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+position = Vector2(-25, -27)
+rotation = -0.0181648
+
+[connection signal="timeout" from="World/MobTimer" to="." method="_on_mob_timer_timeout"]

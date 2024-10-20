@@ -70,6 +70,22 @@ var applied_results: bool = false
 @export var min_player_count: int = 2
 @export var max_player_count: int = 4
 
+## bullet spawn
+@export var mob_scene: PackedScene
+func _on_mob_timer_timeout():
+	# Create a new instance of the Mob scene.
+	var new_mob = preload("res://scenes/mob_bullet.tscn").instantiate()
+
+	# Choose a random location on Path2D.
+	%PathFollow2D.progress_ratio = randf()
+	new_mob.global_position = %PathFollow2D.global_position
+
+	# Choose the velocity for the mob.
+	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+
+	# Spawn the mob by adding it to the Main scene.
+	add_child(new_mob)
+	
 
 ## Holds information about a player 
 class PlayerData:
@@ -96,7 +112,7 @@ class PlayerData:
 		number = _index + 1
 		color = _color
 		points = _points
-		
+
 
 ## Holds information about the result of a match for a player
 class PlayerResultData:
@@ -169,6 +185,7 @@ func apply_results(results: Array):
 ## ]
 func end_game(results = null):
 	game_ended.emit()
+	$MobTimer.stop()
 	
 	if results != null:
 		apply_results(results)
@@ -197,6 +214,8 @@ func _ready():
 		save_file_data = DUMMY_SAVE_DATA.duplicate(true)
 	
 	game_started.emit(get_players())
+	
+
 
 
 func _parse_cmd_args():
