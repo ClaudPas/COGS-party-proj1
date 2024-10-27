@@ -38,9 +38,9 @@ func _physics_process(delta):
 	attack_pivot.rotation = attack_direction.angle() + deg_to_rad(180)
 	velocity = direction * 600
 	if velocity.x <= -1:
-		get_node("CharacterPlaceholder_png").flip_h = false
+		get_node("CharacterSprite").flip_h = false
 	elif velocity.x >= 1:
-		get_node("CharacterPlaceholder_png").flip_h = true
+		get_node("CharacterSprite").flip_h = true
 	move_and_slide()
 	
 	var new_attack_press = Input.is_joy_button_pressed(joy_device_id, JOY_BUTTON_RIGHT_SHOULDER)
@@ -50,10 +50,14 @@ func _physics_process(delta):
 	
 func attack():
 	on_cooldown = true
+	get_node("CharacterSprite").play("smash")
+	get_node("AttackPivot/Area2D/SmashSprite").play("smash")
 	enable_attack_hitbox.monitoring = true
 	await get_tree().physics_frame
 	enable_attack_hitbox.monitoring = false
 	await get_tree().create_timer(2).timeout
+	get_node("AttackPivot/Area2D/SmashSprite").play("default")
+	get_node("CharacterSprite").play("default")
 	on_cooldown = false
 
 func bullet_hit():
@@ -67,4 +71,5 @@ func player_hit(attacker_index: int):
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var other_player: Player = body
-	other_player.player_hit(player_data.index)
+	if body != self:
+		other_player.player_hit(player_data.index)

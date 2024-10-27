@@ -52,8 +52,8 @@ func _process(delta: float) -> void:
 		for i in range(len(points)):
 			if i >= len(rewards):
 				break
-			results.append[{
+			results.append({
 				"points": rewards[i],
 				"player": points[i].player
-			}]
+			})
 		minigame_manager.end_game(results)
