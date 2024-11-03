@@ -19,8 +19,8 @@ var player_data: MiniGameManager.PlayerData
 func construct(player_data: MiniGameManager.PlayerData):
 	self.player_data = player_data
 	hat_sprite.modulate = player_data.color
-	if len(Input.get_connected_joypads()) >= player_data.number:
-		joy_device_id = Input.get_connected_joypads()[player_data.index]
+	_on_joy_connection_changed()
+	Input.joy_connection_changed.connect(_on_joy_connection_changed.unbind(2))
 
 func _physics_process(delta):
 	if joy_device_id < 0:
@@ -73,3 +73,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	var other_player: Player = body
 	if body != self:
 		other_player.player_hit(player_data.index)
+		
+func _on_joy_connection_changed():
+	if len(Input.get_connected_joypads()) >= player_data.number:
+		joy_device_id = Input.get_connected_joypads()[player_data.index]

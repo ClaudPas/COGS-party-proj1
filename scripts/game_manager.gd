@@ -12,6 +12,7 @@ static var global: GameManager
 
 var player_kills_dict = {}
 var player_deaths_dict = {}
+var player_data_arr = []
 
 func _ready():
 	minigame_manager.game_started.connect(on_game_started)
@@ -21,20 +22,16 @@ func _ready():
 	global = self
 
 func on_game_started(player_data_array: Array):
+	player_data_arr = player_data_array
 	print(JSON.stringify(player_data_array))
 	for i in range(len(player_data_array)):
-		var player_data: MiniGameManager.PlayerData = player_data_array[i]
-		var player_instance: Player = player_prefab.instantiate()
-		world.add_child(player_instance)
-		player_instance.construct(player_data)
-		player_instance.position = spawn_positions.get_child(i).position
-		player_kills_dict[i] = 0
-		player_deaths_dict[i] = 0
-		player_instance.death.connect(on_player_death.bind(i))
+		spawn_player(i)
 
-func on_player_death(attacker_index: int, victim: int):
+func on_player_death(attacker_index: int, victim_index: int):
 	player_kills_dict[attacker_index] += 1
-	player_deaths_dict[victim] += 1
+	player_deaths_dict[victim_index] += 1
+	await get_tree().create_timer(3).timeout
+	spawn_player(victim_index)
 
 func _process(delta: float) -> void:
 	time -= delta
@@ -57,3 +54,13 @@ func _process(delta: float) -> void:
 				"player": points[i].player
 			})
 		minigame_manager.end_game(results)
+
+func spawn_player(player_index: int):
+	var player_data = player_data_arr[player_index]
+	var player_instance: Player = player_prefab.instantiate()
+	world.add_child(player_instance)
+	player_instance.construct(player_data)
+	player_instance.position = spawn_positions.get_child(player_index).position
+	player_kills_dict[player_index] = 0
+	player_deaths_dict[player_index] = 0
+	player_instance.death.connect(on_player_death.bind(player_index))
