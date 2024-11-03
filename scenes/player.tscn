@@ -50,12 +50,12 @@ animations = [{
 "speed": 1.0
 }]
 
+[sub_resource type="Animation" id="Animation_wavql"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_usq0n"]
 resource_name = "smash"
 step = 2.0
-
-[sub_resource type="Animation" id="Animation_wavql"]
-length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0wffn"]
 _data = {
@@ -64,6 +64,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hat_sprite", "attack_pivot", "enable_attack_hitbox")]
+motion_mode = 1
 script = ExtResource("1_1bsit")
 hat_sprite = NodePath("HatSprite")
 attack_pivot = NodePath("AttackPivot")
