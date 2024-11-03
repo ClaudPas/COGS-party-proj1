@@ -1,4 +1,5 @@
 extends Node
+class_name MiniGameManager
 ## MiniGameManager is the main script that handles starting and ending a minigame.
 ##
 ## There are various signals you can connect to

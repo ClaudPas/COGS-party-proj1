@@ -1,25 +1,115 @@
-[gd_scene load_steps=5 format=3 uid="uid://dg81wrtj60tu"]
+[gd_scene load_steps=14 format=3 uid="uid://dg81wrtj60tu"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1bsit"]
-[ext_resource type="Texture2D" uid="uid://co6vqiqylayot" path="res://assets/CharacterPlaceholder.png" id="2_qals0"]
+[ext_resource type="Texture2D" uid="uid://cr8702ps3av6p" path="res://assets/CharacterPlaceholder (2).png" id="2_ykepn"]
+[ext_resource type="Texture2D" uid="uid://4k4x2ij3natw" path="res://assets/SmashHit.png" id="3_bk1nu"]
 [ext_resource type="Texture2D" uid="uid://dpomum5xmbsjx" path="res://assets/PlaceholderHat.png" id="3_lwf3q"]
+[ext_resource type="Texture2D" uid="uid://dxd7q1f5eo443" path="res://assets/IndicatorPlaceholder-1.png.png" id="3_qvykk"]
+[ext_resource type="Texture2D" uid="uid://drw2s5pswkkyl" path="res://assets/CharacterPlaceholder2b-1.png.png" id="4_ibckl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3agqq"]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hat_sprite")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_b1ss6"]
+radius = 15.873
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_df7x8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qvykk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bk1nu")
+}],
+"loop": true,
+"name": &"smash",
+"speed": 0.5
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_equni"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ykepn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ibckl")
+}],
+"loop": true,
+"name": &"smash",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_wavql"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_usq0n"]
+resource_name = "smash"
+step = 2.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0wffn"]
+_data = {
+"RESET": SubResource("Animation_wavql"),
+"smash": SubResource("Animation_usq0n")
+}
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hat_sprite", "attack_pivot", "enable_attack_hitbox")]
+motion_mode = 1
 script = ExtResource("1_1bsit")
 hat_sprite = NodePath("HatSprite")
+attack_pivot = NodePath("AttackPivot")
+enable_attack_hitbox = NodePath("AttackPivot/Area2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)
 scale = Vector2(-0.882324, 0.627424)
 shape = SubResource("CircleShape2D_3agqq")
 
-[node name="CharacterPlaceholder_png" type="Sprite2D" parent="."]
-scale = Vector2(1.88636, 1.85714)
-texture = ExtResource("2_qals0")
-
 [node name="HatSprite" type="Sprite2D" parent="."]
+z_index = 1
 position = Vector2(0, -12)
-scale = Vector2(0.71875, 0.8125)
+scale = Vector2(0.87875, 0.8125)
 texture = ExtResource("3_lwf3q")
+
+[node name="AttackPivot" type="Node2D" parent="."]
+position = Vector2(0, 12)
+
+[node name="Area2D" type="Area2D" parent="AttackPivot"]
+position = Vector2(0, -12)
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/Area2D"]
+position = Vector2(-20, 12)
+rotation = 3.14159
+scale = Vector2(0.882, 0.882)
+shape = SubResource("CircleShape2D_b1ss6")
+
+[node name="SmashSprite" type="AnimatedSprite2D" parent="AttackPivot/Area2D"]
+position = Vector2(-20, 12)
+rotation = -1.57079
+scale = Vector2(3.26202, 3.26202)
+sprite_frames = SubResource("SpriteFrames_df7x8")
+
+[node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(1.886, 1.886)
+sprite_frames = SubResource("SpriteFrames_equni")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CharacterSprite")
+libraries = {
+"": SubResource("AnimationLibrary_0wffn")
+}
+
+[connection signal="body_entered" from="AttackPivot/Area2D" to="." method="_on_area_2d_body_entered"]

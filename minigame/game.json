@@ -1,0 +1,12 @@
+{
+    "title": "Godot COGS Part 2 Game",
+    "description": "boo",
+    "date": "10/20/2024",
+    "developers": ["Ryan"],
+    "engine": "Godot",
+    "min_players": 2,
+    "max_players": 4,
+    "builds": {
+      "windows": "./windows/COGS Party 2.exe"
+    }
+  }

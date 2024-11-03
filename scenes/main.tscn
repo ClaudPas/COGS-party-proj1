@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dg81wrtj60tu" path="res://scenes/player.tscn" id="1_rvdd3"]
 [ext_resource type="Texture2D" uid="uid://j406xmnddn7" path="res://Tileset/Snow_tileset.png" id="2_5b74w"]
 [ext_resource type="Texture2D" uid="uid://4rjdtqs0c3f8" path="res://Tileset/OUVDRv.png" id="3_sijms"]
-[ext_resource type="PackedScene" uid="uid://lk1moa4ovcmv" path="res://scenes/block.tscn" id="4_kk04f"]
+[ext_resource type="Script" path="res://scripts/mini_game_manager.gd" id="6_yhc1n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67jcr"]
 texture = ExtResource("2_5b74w")
@@ -354,15 +354,6 @@ metadata/_edit_use_anchors_ = true
 [node name="Timer" type="Timer" parent="World"]
 wait_time = 0.5
 
-[node name="block" parent="World" instance=ExtResource("4_kk04f")]
-position = Vector2(200, 194)
-
-[node name="block2" parent="World" instance=ExtResource("4_kk04f")]
-position = Vector2(912, 324)
-
-[node name="block3" parent="World" instance=ExtResource("4_kk04f")]
-position = Vector2(205, 497)
-
 [node name="SpawnPositions" type="Node2D" parent="World"]
 
 [node name="Spawn1" type="Marker2D" parent="World/SpawnPositions"]
@@ -386,8 +377,33 @@ layer_0/tile_data = PackedInt32Array(-1, 131072, 3, 65535, 131072, 3, 131071, 13
 layer_1/name = "Wall"
 layer_1/tile_data = PackedInt32Array(65540, 589826, 2, 131077, 589826, 2, 131076, 589826, 2, 720900, 589826, 2, 720901, 589826, 2, 786437, 589826, 2, 786436, 589826, 2, 65541, 589826, 2, 327698, 589826, 2, 393234, 589826, 2, 458770, 589826, 2, 327692, 589826, 2, 393228, 589826, 2, 458764, 589826, 2, 524300, 589826, 2, 524306, 589826, 2, 24, 589826, 2, 65560, 589826, 2, 131096, 589826, 2, 196632, 589826, 2, 262168, 589826, 2, 327704, 589826, 2, 393240, 589826, 2, 458776, 589826, 2, 524312, 589826, 2, 589848, 589826, 2, 655384, 589826, 2, 720920, 589826, 2, 786456, 589826, 2, 851992, 589826, 2, 917528, 589826, 2, 983039, 589826, 2, 917504, 589826, 2, 917505, 589826, 2, 917506, 589826, 2, 917507, 589826, 2, 917508, 589826, 2, 917509, 589826, 2, 917510, 589826, 2, 917511, 589826, 2, 917512, 589826, 2, 917513, 589826, 2, 917514, 589826, 2, 917515, 589826, 2, 917516, 589826, 2, 917517, 589826, 2, 917518, 589826, 2, 917519, 589826, 2, 917520, 589826, 2, 917521, 589826, 2, 917522, 589826, 2, 917523, 589826, 2, 917524, 589826, 2, 917525, 589826, 2, 917526, 589826, 2, 917527, 589826, 2, 917503, 589826, 2, 851967, 589826, 2, 786431, 589826, 2, 720895, 589826, 2, 655359, 589826, 2, 589823, 589826, 2, 524287, 589826, 2, 458751, 589826, 2, 393215, 589826, 2, 327679, 589826, 2, 262143, 589826, 2, 196607, 589826, 2, 131071, 589826, 2, 65535, 589826, 2, -1, 589826, 2, -65536, 589826, 2, -65535, 589826, 2, -65534, 589826, 2, -65533, 589826, 2, -65532, 589826, 2, -65531, 589826, 2, -131066, 589826, 2, -131065, 589826, 2, -131064, 589826, 2, -65528, 589826, 2, -65529, 589826, 2, -65530, 589826, 2, -65527, 589826, 2, -65526, 589826, 2, -65525, 589826, 2, -65524, 589826, 2, -65523, 589826, 2, -65522, 589826, 2, -65521, 589826, 2, -65520, 589826, 2, -65519, 589826, 2, -65518, 589826, 2, -65517, 589826, 2, -65516, 589826, 2, -65515, 589826, 2, -65514, 589826, 2, -65513, 589826, 2, -65512, 589826, 2, 65554, 589826, 2, 131090, 589826, 2, 65555, 589826, 2, 131091, 589826, 2, 720914, 589826, 2, 786450, 589826, 2, 786451, 589826, 2, 720915, 589826, 2, 327685, 589826, 2, 393221, 589826, 2, 458757, 589826, 2, 524293, 589826, 2, 327691, 589826, 2, 393227, 589826, 2, 458763, 589826, 2, 524299, 589826, 2)
 
-[node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("world", "spawn_positions")]
+[node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("world", "spawn_positions", "timer", "minigame_manager")]
 script = ExtResource("1_fns5n")
 world = NodePath("../World")
 player_prefab = ExtResource("1_rvdd3")
 spawn_positions = NodePath("../World/SpawnPositions")
+timer = NodePath("../UI/Timer")
+minigame_manager = NodePath("../Minigame Manager")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -17.0
+offset_right = 17.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "hola"
+
+[node name="Minigame Manager" type="Node" parent="."]
+script = ExtResource("6_yhc1n")
