@@ -13,7 +13,7 @@ size = Vector2(20, 25.8373)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3cyga"]
 size = Vector2(1152, 18)
 
-[node name="Main" type="Node"]
+[node name="Main2" type="Node"]
 
 [node name="World" type="Node2D" parent="."]
 
