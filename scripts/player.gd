@@ -15,6 +15,7 @@ var attack_direction: Vector2
 var attack_press: bool
 var on_cooldown: bool = false
 var player_data: MiniGameManager.PlayerData
+var speed = 400
 
 func construct(player_data: MiniGameManager.PlayerData):
 	self.player_data = player_data
@@ -36,10 +37,10 @@ func _physics_process(delta):
 	if new_attack_direction != Vector2.ZERO:
 		attack_direction = new_attack_direction
 	attack_pivot.rotation = attack_direction.angle() + deg_to_rad(180)
-	velocity = direction * 600
-	if velocity.x <= -1:
+	velocity = direction * speed
+	if attack_direction.x <= -0.1:
 		get_node("CharacterSprite").flip_h = false
-	elif velocity.x >= 1:
+	elif attack_direction.x >= 0.1:
 		get_node("CharacterSprite").flip_h = true
 	move_and_slide()
 	
@@ -52,22 +53,30 @@ func attack():
 	on_cooldown = true
 	get_node("CharacterSprite").play("smash")
 	get_node("AttackPivot/Area2D/SmashSprite").play("smash")
+	speed = 0
 	enable_attack_hitbox.monitoring = true
 	await get_tree().physics_frame
 	enable_attack_hitbox.monitoring = false
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(1).timeout
+	speed = 400
+	await get_tree().create_timer(1).timeout
 	get_node("AttackPivot/Area2D/SmashSprite").play("default")
 	get_node("CharacterSprite").play("default")
 	on_cooldown = false
 
 func bullet_hit():
-	queue_free()
+	health -= 1
+	if health <= 0:
+		queue_free()
 
 func player_hit(attacker_index: int):
 	health -= 1
+	get_node("CharacterSprite").play("hurt")
 	if health <= 0:
 		death.emit(attacker_index)
 		queue_free()
+	await get_tree().create_timer(1).timeout
+	get_node("CharacterSprite").play("default")
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var other_player: Player = body
