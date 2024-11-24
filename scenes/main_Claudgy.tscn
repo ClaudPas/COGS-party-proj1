@@ -63,12 +63,18 @@ shape = SubResource("RectangleShape2D_3cyga")
 
 [node name="block" parent="World" instance=ExtResource("1_rlxds")]
 position = Vector2(200, 194)
+collision_layer = 4
+collision_mask = 4
 
 [node name="block2" parent="World" instance=ExtResource("1_rlxds")]
 position = Vector2(912, 324)
+collision_layer = 4
+collision_mask = 4
 
 [node name="block3" parent="World" instance=ExtResource("1_rlxds")]
 position = Vector2(205, 497)
+collision_layer = 4
+collision_mask = 4
 
 [node name="SpawnPositions" type="Node2D" parent="World"]
 
