@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dg81wrtj60tu"]
+[gd_scene load_steps=15 format=3 uid="uid://dg81wrtj60tu"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1bsit"]
 [ext_resource type="Texture2D" uid="uid://cr8702ps3av6p" path="res://assets/CharacterPlaceholder (2).png" id="2_ykepn"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dpomum5xmbsjx" path="res://assets/PlaceholderHat.png" id="3_lwf3q"]
 [ext_resource type="Texture2D" uid="uid://dxd7q1f5eo443" path="res://assets/IndicatorPlaceholder-1.png.png" id="3_qvykk"]
 [ext_resource type="Texture2D" uid="uid://drw2s5pswkkyl" path="res://assets/CharacterPlaceholder2b-1.png.png" id="4_ibckl"]
+[ext_resource type="Texture2D" uid="uid://dwwtwsuepdn0g" path="res://assets/CharacterPlaceholder2c-1.png.png" id="6_wowxt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3agqq"]
 
@@ -39,6 +40,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_wowxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ykepn")
+}],
+"loop": true,
+"name": &"hurt",
 "speed": 5.0
 }, {
 "frames": [{
@@ -77,8 +89,8 @@ shape = SubResource("CircleShape2D_3agqq")
 
 [node name="HatSprite" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(0, -12)
-scale = Vector2(0.87875, 0.8125)
+position = Vector2(-0.999999, -12)
+scale = Vector2(1.50188, 1.38865)
 texture = ExtResource("3_lwf3q")
 
 [node name="AttackPivot" type="Node2D" parent="."]
