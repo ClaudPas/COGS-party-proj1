@@ -3,7 +3,7 @@ class_name Player
 
 signal death(attacker_index: int)
 
-@export var hat_sprite: Sprite2D
+@export var hat_sprite: AnimatedSprite2D
 @export var joy_device_id: int = -1
 @export var deadzone: float = 0.2
 @export var attack_pivot: Node2D
@@ -61,7 +61,7 @@ func attack():
 	speed = 400
 	await get_tree().create_timer(1).timeout
 	get_node("AttackPivot/Area2D/SmashSprite").play("default")
-	get_node("CharacterSprite").play("default")
+	get_node("CharacterSprite").play("idle")
 	on_cooldown = false
 
 func bullet_hit():
