@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bdjk501k14xgi"]
+[gd_scene load_steps=10 format=3 uid="uid://bdjk501k14xgi"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_fns5n"]
 [ext_resource type="PackedScene" uid="uid://dg81wrtj60tu" path="res://scenes/player.tscn" id="1_rvdd3"]
@@ -335,6 +335,12 @@ physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_67jcr")
 sources/2 = SubResource("TileSetAtlasSource_a2gk6")
 
+[sub_resource type="Curve2D" id="Curve2D_32blj"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -48, -48, 0, 0, 0, 0, 1198, -48, 0, 0, 0, 0, 1194, 715, 0, 0, 0, 0, -53, 713, 0, 0, 0, 0, -48, -48)
+}
+point_count = 5
+
 [node name="Main" type="Node"]
 
 [node name="World" type="Node2D" parent="."]
@@ -350,9 +356,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.838009, 0.846589, 1, 1)
 metadata/_edit_use_anchors_ = true
-
-[node name="Timer" type="Timer" parent="World"]
-wait_time = 0.5
 
 [node name="SpawnPositions" type="Node2D" parent="World"]
 
@@ -385,6 +388,16 @@ spawn_positions = NodePath("../World/SpawnPositions")
 timer = NodePath("../UI/Timer")
 minigame_manager = NodePath("../Minigame Manager")
 
+[node name="MobTimer" type="Timer" parent="Game Manager"]
+wait_time = 0.25
+autostart = true
+
+[node name="MobPath" type="Path2D" parent="Game Manager"]
+curve = SubResource("Curve2D_32blj")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="Game Manager/MobPath"]
+position = Vector2(-48, -48)
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -407,3 +420,5 @@ text = "hola"
 
 [node name="Minigame Manager" type="Node" parent="."]
 script = ExtResource("6_yhc1n")
+
+[connection signal="timeout" from="Game Manager/MobTimer" to="Game Manager" method="_on_mob_timer_timeout"]

@@ -9,6 +9,8 @@ static var global: GameManager
 @export var timer: Label
 @export var minigame_manager: MiniGameManager
 @export var time: float = 180
+@export var bullet: PackedScene
+@export var path_follow: PathFollow2D
 
 var player_kills_dict = {}
 var player_deaths_dict = {}
@@ -64,3 +66,31 @@ func spawn_player(player_index: int):
 	player_kills_dict[player_index] = 0
 	player_deaths_dict[player_index] = 0
 	player_instance.death.connect(on_player_death.bind(player_index))
+
+
+func _on_mob_timer_timeout() -> void:
+	var bullet = load("res://scenes/bullet_obj.tscn")
+# Create a new instance of the Mob scene.
+	var mob = bullet.instantiate()
+
+	# Choose a random location on Path2D.
+	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
+	mob_spawn_location.progress_ratio = randi()
+
+	# Set the mob's direction perpendicular to the path direction.
+	var direction = mob_spawn_location.rotation + PI / 2
+
+	# Set the mob's position to a random location.
+	mob.position = mob_spawn_location.position
+
+	# Add some randomness to the direction.
+	direction += randf_range(-PI / 4, PI / 4)
+	mob.rotation = direction
+
+	# Choose the velocity for the mob.
+
+	var velocity = Vector2(randf_range(150, 750), 0.0)
+	mob.linear_velocity = velocity.rotated(direction)
+
+	# Spawn the mob by adding it to the Main scene.
+	add_child(mob)

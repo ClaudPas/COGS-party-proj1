@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7e2hfft8y201"]
+
+[ext_resource type="Texture2D" uid="uid://bvwjkbpianl4p" path="res://assets/BulletPlaceholder.png" id="1_wcydl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0dkia"]
+
+[node name="bullet_obj" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.38419e-07, 2.38419e-07)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_wcydl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0dkia")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

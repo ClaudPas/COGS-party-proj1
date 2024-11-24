@@ -1,20 +1,10 @@
-extends Area2D
+extends RigidBody2D
+class_name Bullet
 
-var distance_travelled = 0;
-
-func _physics_process(delta):
-	const SPEED = 1000
-	const RANGE = 1200
-	
-	var direction = Vector2.LEFT.rotated(rotation)
-	position += direction * 1000.0 * delta
-	
-	distance_travelled += SPEED * delta
-	if(distance_travelled > RANGE):
-		queue_free()
+@export var min_speed = 150.0
+@export var max_speed = 250.0
 
 
-func _on_body_entered(body):
-	if body.has_method("bullet_hit"):
-		body.bullet_hit()
-		
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()
