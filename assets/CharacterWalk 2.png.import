@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drw2s5pswkkyl"
-path="res://.godot/imported/CharacterPlaceholder2b-1.png.png-9a327e3916dd3502aa5f86f60d9b608a.ctex"
+uid="uid://cwr5qa2scoles"
+path="res://.godot/imported/CharacterWalk 2.png-c0ea8bf1c676b1029aa7a707d61fdf85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/CharacterPlaceholder2b-1.png.png"
-dest_files=["res://.godot/imported/CharacterPlaceholder2b-1.png.png-9a327e3916dd3502aa5f86f60d9b608a.ctex"]
+source_file="res://assets/CharacterWalk 2.png"
+dest_files=["res://.godot/imported/CharacterWalk 2.png-c0ea8bf1c676b1029aa7a707d61fdf85.ctex"]
 
 [params]
 

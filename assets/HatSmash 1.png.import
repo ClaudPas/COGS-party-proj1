@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwwtwsuepdn0g"
-path="res://.godot/imported/CharacterPlaceholder2c-1.png.png-080bbdab8387fab2df1c97f4f576b274.ctex"
+uid="uid://babofxwur0re3"
+path="res://.godot/imported/HatSmash 1.png-a36fb044fa27c1e684f86a1ff2d2c790.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/CharacterPlaceholder2c-1.png.png"
-dest_files=["res://.godot/imported/CharacterPlaceholder2c-1.png.png-080bbdab8387fab2df1c97f4f576b274.ctex"]
+source_file="res://assets/HatSmash 1.png"
+dest_files=["res://.godot/imported/HatSmash 1.png-a36fb044fa27c1e684f86a1ff2d2c790.ctex"]
 
 [params]
 
