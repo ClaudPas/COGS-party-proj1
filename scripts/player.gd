@@ -3,7 +3,7 @@ class_name Player
 
 signal death(attacker_index: int)
 
-@export var hat_sprite: Sprite2D
+@export var hat_sprite: AnimatedSprite2D
 @export var joy_device_id: int = -1
 @export var deadzone: float = 0.2
 @export var attack_pivot: Node2D
@@ -24,6 +24,8 @@ func construct(player_data: MiniGameManager.PlayerData):
 	Input.joy_connection_changed.connect(_on_joy_connection_changed.unbind(2))
 
 func _physics_process(delta):
+	get_node("CharacterSprite").play("idle")
+	get_node("HatSprite").play("idle")
 	if joy_device_id < 0:
 		return
 	var direction = Vector2(Input.get_joy_axis(joy_device_id, JOY_AXIS_LEFT_X), Input.get_joy_axis(joy_device_id, JOY_AXIS_LEFT_Y))
@@ -38,6 +40,12 @@ func _physics_process(delta):
 		attack_direction = new_attack_direction
 	attack_pivot.rotation = attack_direction.angle() + deg_to_rad(180)
 	velocity = direction * speed
+	if velocity.x != 0 || velocity.y != 0:
+		get_node("CharacterSprite").play("walk")
+		get_node("HatSprite").play("default")
+	else:
+		get_node("CharacterSprite").play("idle")
+		get_node("HatSprite").play("idle")
 	if attack_direction.x <= -0.1:
 		get_node("CharacterSprite").flip_h = false
 	elif attack_direction.x >= 0.1:
@@ -53,7 +61,9 @@ func attack():
 	on_cooldown = true
 	get_node("CharacterSprite").play("smash")
 	get_node("AttackPivot/Area2D/SmashSprite").play("smash")
+	get_node("HatSprite").play("smash")
 	speed = 0
+	await get_tree().create_timer(0.5).timeout
 	enable_attack_hitbox.monitoring = true
 	await get_tree().physics_frame
 	enable_attack_hitbox.monitoring = false
@@ -61,7 +71,8 @@ func attack():
 	speed = 400
 	await get_tree().create_timer(1).timeout
 	get_node("AttackPivot/Area2D/SmashSprite").play("default")
-	get_node("CharacterSprite").play("default")
+	get_node("CharacterSprite").play("idle")
+	get_node("HatSprite").play("idle")
 	on_cooldown = false
 
 func bullet_hit():
@@ -72,11 +83,15 @@ func bullet_hit():
 func player_hit(attacker_index: int):
 	health -= 1
 	get_node("CharacterSprite").play("hurt")
+	get_node("HatSprite").play("default")
+	speed = 0
 	if health <= 0:
 		death.emit(attacker_index)
 		queue_free()
 	await get_tree().create_timer(1).timeout
-	get_node("CharacterSprite").play("default")
+	speed = 400
+	get_node("CharacterSprite").play("idle")
+	get_node("HatSprite").play("idle")
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var other_player: Player = body

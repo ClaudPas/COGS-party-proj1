@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwwtwsuepdn0g"
-path="res://.godot/imported/CharacterPlaceholder2c-1.png.png-080bbdab8387fab2df1c97f4f576b274.ctex"
+uid="uid://d3wj1bpgihmfs"
+path="res://.godot/imported/Hat 2.png-686598cec8f38e268ffe6045a6694522.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/CharacterPlaceholder2c-1.png.png"
-dest_files=["res://.godot/imported/CharacterPlaceholder2c-1.png.png-080bbdab8387fab2df1c97f4f576b274.ctex"]
+source_file="res://assets/Hat 2.png"
+dest_files=["res://.godot/imported/Hat 2.png-686598cec8f38e268ffe6045a6694522.ctex"]
 
 [params]
 
