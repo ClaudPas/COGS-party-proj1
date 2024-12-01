@@ -77,6 +77,11 @@ func attack():
 
 func bullet_hit():
 	health -= 1
+	get_node("CharacterSprite").play("hurt")
+	get_node("HatSprite").play("default")
+	await get_tree().create_timer(1).timeout
+	get_node("CharacterSprite").play("idle")
+	get_node("HatSprite").play("idle")
 	if health <= 0:
 		queue_free()
 
@@ -85,10 +90,12 @@ func player_hit(attacker_index: int):
 	get_node("CharacterSprite").play("hurt")
 	get_node("HatSprite").play("default")
 	speed = 0
+	on_cooldown = true
 	if health <= 0:
 		death.emit(attacker_index)
 		queue_free()
 	await get_tree().create_timer(1).timeout
+	on_cooldown = false
 	speed = 400
 	get_node("CharacterSprite").play("idle")
 	get_node("HatSprite").play("idle")
