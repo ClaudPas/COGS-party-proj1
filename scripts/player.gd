@@ -24,8 +24,6 @@ func construct(player_data: MiniGameManager.PlayerData):
 	Input.joy_connection_changed.connect(_on_joy_connection_changed.unbind(2))
 
 func _physics_process(delta):
-	get_node("CharacterSprite").play("idle")
-	get_node("HatSprite").play("idle")
 	if joy_device_id < 0:
 		return
 	var direction = Vector2(Input.get_joy_axis(joy_device_id, JOY_AXIS_LEFT_X), Input.get_joy_axis(joy_device_id, JOY_AXIS_LEFT_Y))
@@ -44,8 +42,9 @@ func _physics_process(delta):
 		get_node("CharacterSprite").play("walk")
 		get_node("HatSprite").play("default")
 	else:
-		get_node("CharacterSprite").play("idle")
-		get_node("HatSprite").play("idle")
+		if !on_cooldown:
+			get_node("CharacterSprite").play("idle")
+			get_node("HatSprite").play("idle")
 	if attack_direction.x <= -0.1:
 		get_node("CharacterSprite").flip_h = false
 	elif attack_direction.x >= 0.1:

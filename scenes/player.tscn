@@ -191,7 +191,6 @@ libraries = {
 position = Vector2(1, 1)
 scale = Vector2(1.886, 1.886)
 sprite_frames = SubResource("SpriteFrames_fbd7t")
-animation = &"walk"
-frame_progress = 0.0818139
+animation = &"idle"
 
 [connection signal="body_entered" from="AttackPivot/Area2D" to="." method="_on_area_2d_body_entered"]
