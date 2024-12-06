@@ -10,6 +10,7 @@ signal death(attacker_index: int)
 @export var enable_attack_hitbox: Area2D
 @export var health: int = 3
 @export var attack_cd: float = 2
+#@export var obj: Bullet
 
 var attack_direction: Vector2
 var attack_press: bool
@@ -56,13 +57,13 @@ func _physics_process(delta):
 		attack()
 	attack_press = new_attack_press
 	
+	
 func attack():
 	on_cooldown = true
 	get_node("CharacterSprite").play("smash")
 	get_node("AttackPivot/Area2D/SmashSprite").play("smash")
 	get_node("HatSprite").play("smash")
 	speed = 0
-	await get_tree().create_timer(0.5).timeout
 	enable_attack_hitbox.monitoring = true
 	await get_tree().physics_frame
 	enable_attack_hitbox.monitoring = false
@@ -73,16 +74,34 @@ func attack():
 	get_node("CharacterSprite").play("idle")
 	get_node("HatSprite").play("idle")
 	on_cooldown = false
+	
+	#func attack():
+	#on_cooldown = true
+	#get_node("CharacterSprite").play("smash")
+	#get_node("AttackPivot/Area2D/SmashSprite").play("smash")
+	#get_node("HatSprite").play("smash")
+	#speed = 0
+	#await get_tree().create_timer(0.5).timeout
+	#enable_attack_hitbox.monitoring = true
+	#await get_tree().physics_frame
+	#enable_attack_hitbox.monitoring = false
+	#await get_tree().create_timer(1).timeout
+	#speed = 400
+	#await get_tree().create_timer(1).timeout
+	#get_node("AttackPivot/Area2D/SmashSprite").play("default")
+	#get_node("CharacterSprite").play("idle")
+	#get_node("HatSprite").play("idle")
+	#on_cooldown = false
 
 func bullet_hit():
 	health -= 1
 	get_node("CharacterSprite").play("hurt")
 	get_node("HatSprite").play("default")
+	if health <= 0:
+		queue_free()
 	await get_tree().create_timer(1).timeout
 	get_node("CharacterSprite").play("idle")
 	get_node("HatSprite").play("idle")
-	if health <= 0:
-		queue_free()
 
 func player_hit(attacker_index: int):
 	health -= 1
@@ -98,12 +117,27 @@ func player_hit(attacker_index: int):
 	speed = 400
 	get_node("CharacterSprite").play("idle")
 	get_node("HatSprite").play("idle")
+	
+	#func player_hit(attacker_index: int):
+	#health -= 1
+	#get_node("CharacterSprite").play("hurt")
+	#get_node("HatSprite").play("default")
+	#speed = 0
+	#on_cooldown = true
+	#if health <= 0:
+	#	death.emit(attacker_index)
+	#	queue_free()
+	#await get_tree().create_timer(1).timeout
+	#on_cooldown = false
+	#speed = 400
+	#get_node("CharacterSprite").play("idle")
+	#get_node("HatSprite").play("idle")
+
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var other_player: Player = body
 	if body != self:
 		other_player.player_hit(player_data.index)
-		
 func _on_joy_connection_changed():
 	if len(Input.get_connected_joypads()) >= player_data.number:
 		joy_device_id = Input.get_connected_joypads()[player_data.index]

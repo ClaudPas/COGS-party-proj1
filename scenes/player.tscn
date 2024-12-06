@@ -144,6 +144,8 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hat_sprite", "attack_pivot", "enable_attack_hitbox")]
+collision_layer = 3
+collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_1bsit")
 hat_sprite = NodePath("HatSprite")
@@ -193,4 +195,5 @@ scale = Vector2(1.886, 1.886)
 sprite_frames = SubResource("SpriteFrames_fbd7t")
 animation = &"idle"
 
+[connection signal="child_entered_tree" from="CollisionShape2D" to="." method="_on_collision_shape_2d_child_entered_tree"]
 [connection signal="body_entered" from="AttackPivot/Area2D" to="." method="_on_area_2d_body_entered"]

@@ -68,7 +68,7 @@ func spawn_player(player_index: int):
 	player_instance.death.connect(on_player_death.bind(player_index))
 
 
-func _on_mob_timer_timeout() -> void:
+func _on_mob_timer_timeout():
 	var bullet = load("res://scenes/bullet_obj.tscn")
 # Create a new instance of the Mob scene.
 	var mob = bullet.instantiate()
@@ -89,7 +89,7 @@ func _on_mob_timer_timeout() -> void:
 
 	# Choose the velocity for the mob.
 
-	var velocity = Vector2(randf_range(150, 750), 0.0)
+	var velocity = Vector2(randf_range(150, 350), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
 
 	# Spawn the mob by adding it to the Main scene.
