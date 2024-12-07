@@ -16,6 +16,7 @@ var player_kills_dict = {}
 var player_deaths_dict = {}
 var player_data_arr = []
 
+
 func _ready():
 	minigame_manager.game_started.connect(on_game_started)
 	if global != null:
@@ -30,6 +31,8 @@ func on_game_started(player_data_array: Array):
 		spawn_player(i)
 
 func on_player_death(attacker_index: int, victim_index: int):
+	if attacker_index == victim_index:
+		player_kills_dict[attacker_index] -= 1
 	player_kills_dict[attacker_index] += 1
 	player_deaths_dict[victim_index] += 1
 	await get_tree().create_timer(3).timeout
@@ -69,7 +72,7 @@ func spawn_player(player_index: int):
 
 
 func _on_mob_timer_timeout():
-	var bullet = load("res://scenes/bullet_obj.tscn")
+	bullet = load("res://scenes/bullet_obj.tscn")
 # Create a new instance of the Mob scene.
 	var mob = bullet.instantiate()
 

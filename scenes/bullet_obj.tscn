@@ -7,7 +7,7 @@
 
 [node name="bullet_obj" type="RigidBody2D"]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 4
 gravity_scale = 0.0
 script = ExtResource("1_a01rg")
 max_speed = 350.0

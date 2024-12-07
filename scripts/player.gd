@@ -10,7 +10,8 @@ signal death(attacker_index: int)
 @export var enable_attack_hitbox: Area2D
 @export var health: int = 3
 @export var attack_cd: float = 2
-#@export var obj: Bullet
+@export var bull: Bullet
+@onready var bullet = get_node("/root/Game/bullet_obj")
 
 var attack_direction: Vector2
 var attack_press: bool
@@ -57,7 +58,6 @@ func _physics_process(delta):
 		attack()
 	attack_press = new_attack_press
 	
-	
 func attack():
 	on_cooldown = true
 	get_node("CharacterSprite").play("smash")
@@ -93,13 +93,17 @@ func attack():
 	#get_node("HatSprite").play("idle")
 	#on_cooldown = false
 
-func bullet_hit():
+func bullet_hit(attacker_index:int):
 	health -= 1
 	get_node("CharacterSprite").play("hurt")
 	get_node("HatSprite").play("default")
+	on_cooldown = true
 	if health <= 0:
+		death.emit(attacker_index)
 		queue_free()
 	await get_tree().create_timer(1).timeout
+	on_cooldown = false
+	speed = 400
 	get_node("CharacterSprite").play("idle")
 	get_node("HatSprite").play("idle")
 
@@ -141,3 +145,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_joy_connection_changed():
 	if len(Input.get_connected_joypads()) >= player_data.number:
 		joy_device_id = Input.get_connected_joypads()[player_data.index]
+
+
+func _on_bull_hurtbox_body_entered(body: Node2D) -> void:
+	if body != self:
+		self.bullet_hit(player_data.index)
