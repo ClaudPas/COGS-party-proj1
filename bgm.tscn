@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt0gg6s3su0v"]
+
+[ext_resource type="AudioStream" uid="uid://bg2jhj28oly8u" path="res://bupkiswarfareost1.mp3" id="1_hrt4h"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_hrt4h")
+volume_db = -15.843
+autoplay = true
