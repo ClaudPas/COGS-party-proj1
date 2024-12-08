@@ -53,6 +53,7 @@ func _physics_process(delta):
 			if !hurt:
 				get_node("CharacterSprite").play("idle")
 			else:
+				get_node("HatSprite").play("default")
 				get_node("CharacterSprite").play("hurt")
 	if attack_direction.x <= -0.1:
 		get_node("CharacterSprite").flip_h = false

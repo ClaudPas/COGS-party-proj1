@@ -207,7 +207,7 @@ libraries = {
 position = Vector2(1, 1)
 scale = Vector2(1.886, 1.886)
 sprite_frames = SubResource("SpriteFrames_fbd7t")
-animation = &"hurtwalk"
+animation = &"idle"
 
 [node name="Bull_Hurtbox" type="Area2D" parent="."]
 collision_layer = 4

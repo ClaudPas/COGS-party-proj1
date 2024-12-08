@@ -92,7 +92,7 @@ func _on_mob_timer_timeout():
 
 	# Choose the velocity for the mob.
 
-	var velocity = Vector2(randf_range(250, 250), 0.0)
+	var velocity = Vector2(randf_range(350, 350), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
 	#mob.set_deferred("collision_layer", 0)
 
