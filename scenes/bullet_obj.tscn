@@ -19,6 +19,7 @@ texture = ExtResource("2_wh4ml")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0dkia")
+one_way_collision = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 

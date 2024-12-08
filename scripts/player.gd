@@ -18,6 +18,7 @@ var attack_press: bool
 var on_cooldown: bool = false
 var player_data: MiniGameManager.PlayerData
 var speed = 400
+var hurt: bool = false
 
 func construct(player_data: MiniGameManager.PlayerData):
 	self.player_data = player_data
@@ -41,16 +42,24 @@ func _physics_process(delta):
 	attack_pivot.rotation = attack_direction.angle() + deg_to_rad(180)
 	velocity = direction * speed
 	if velocity.x != 0 || velocity.y != 0:
-		get_node("CharacterSprite").play("walk")
 		get_node("HatSprite").play("default")
+		if !hurt:
+			get_node("CharacterSprite").play("walk")
+		else:
+			get_node("CharacterSprite").play("hurtwalk")
 	else:
 		if !on_cooldown:
-			get_node("CharacterSprite").play("idle")
 			get_node("HatSprite").play("idle")
+			if !hurt:
+				get_node("CharacterSprite").play("idle")
+			else:
+				get_node("CharacterSprite").play("hurt")
 	if attack_direction.x <= -0.1:
 		get_node("CharacterSprite").flip_h = false
+		get_node("HatSprite").flip_h = false
 	elif attack_direction.x >= 0.1:
 		get_node("CharacterSprite").flip_h = true
+		get_node("HatSprite").flip_h = true
 	move_and_slide()
 	
 	var new_attack_press = Input.is_joy_button_pressed(joy_device_id, JOY_BUTTON_RIGHT_SHOULDER)
@@ -95,17 +104,12 @@ func attack():
 
 func bullet_hit(attacker_index:int):
 	health -= 1
-	get_node("CharacterSprite").play("hurt")
-	get_node("HatSprite").play("default")
-	on_cooldown = true
+	hurt = true
 	if health <= 0:
 		death.emit(attacker_index)
 		queue_free()
 	await get_tree().create_timer(1).timeout
-	on_cooldown = false
-	speed = 400
-	get_node("CharacterSprite").play("idle")
-	get_node("HatSprite").play("idle")
+	hurt = false
 
 func player_hit(attacker_index: int):
 	health -= 1

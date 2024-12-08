@@ -1,13 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://dg81wrtj60tu"]
+[gd_scene load_steps=24 format=3 uid="uid://dg81wrtj60tu"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1bsit"]
 [ext_resource type="Texture2D" uid="uid://4k4x2ij3natw" path="res://assets/SmashHit.png" id="3_bk1nu"]
 [ext_resource type="Texture2D" uid="uid://dxd7q1f5eo443" path="res://assets/IndicatorPlaceholder-1.png.png" id="3_qvykk"]
 [ext_resource type="Texture2D" uid="uid://babofxwur0re3" path="res://assets/HatSmash 1.png" id="4_ucsym"]
 [ext_resource type="Texture2D" uid="uid://c4i5r011jn6q2" path="res://assets/CharacterPlaceholder (2) (1).png" id="5_wj5xm"]
+[ext_resource type="Texture2D" uid="uid://cpc13admmpa1w" path="res://assets/CharacterWalk 3.png" id="9_1jlre"]
 [ext_resource type="Texture2D" uid="uid://bwfji55qpoixl" path="res://assets/CharacterPlaceholder (2) hurt 1-1.png.png" id="9_mdhp3"]
 [ext_resource type="Texture2D" uid="uid://cap3i1iobs8to" path="res://assets/CharacterPlaceholder (2) idle 2 (1).png" id="9_rca1f"]
 [ext_resource type="Texture2D" uid="uid://ct4afkco3vk4r" path="res://assets/Hat 1.png" id="10_ai6yx"]
+[ext_resource type="Texture2D" uid="uid://j8w4msltefer" path="res://assets/CharacterHurtWalk1-1.png.png" id="10_jmsc0"]
 [ext_resource type="Texture2D" uid="uid://dpencd365bxt1" path="res://assets/CharacterSmash 1.png" id="10_ptc41"]
 [ext_resource type="Texture2D" uid="uid://c5koiyy7s8bjx" path="res://assets/CharacterSmash 2.png" id="11_11r6t"]
 [ext_resource type="Texture2D" uid="uid://d3wj1bpgihmfs" path="res://assets/Hat 2.png" id="11_ir1a4"]
@@ -104,6 +106,17 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_1jlre")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_jmsc0")
+}],
+"loop": true,
+"name": &"hurtwalk",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 2.0,
 "texture": ExtResource("5_wj5xm")
 }, {
@@ -194,7 +207,7 @@ libraries = {
 position = Vector2(1, 1)
 scale = Vector2(1.886, 1.886)
 sprite_frames = SubResource("SpriteFrames_fbd7t")
-animation = &"idle"
+animation = &"hurtwalk"
 
 [node name="Bull_Hurtbox" type="Area2D" parent="."]
 collision_layer = 4

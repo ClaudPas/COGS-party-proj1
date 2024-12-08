@@ -94,7 +94,7 @@ func _on_mob_timer_timeout():
 
 	var velocity = Vector2(randf_range(250, 250), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
-	mob.set_deferred("collision_layer", 0)
+	#mob.set_deferred("collision_layer", 0)
 
 	# Spawn the mob by adding it to the Main scene.
 	add_child(mob)

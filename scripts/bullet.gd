@@ -11,7 +11,7 @@ class_name Bullet
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(body: Node):
 	bullet_hit.contact_monitor = true
 	if body.has_method("bullet_hit"):
 		body.bullet_hit()
